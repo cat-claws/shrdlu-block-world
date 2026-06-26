@@ -1,27 +1,41 @@
 # SHRDLU Block World
 
-This is the standalone tabletop blocks-world simulator package. It can run
-in-process through a Python API, as a headless HTTP service, or with the browser
-viewer for manual control and visual state updates.
+Small standalone tabletop blocks-world simulator. It can run as a Python object,
+a headless HTTP service, or a browser viewer for manual control.
+
+The distribution name is `shrdlu-block-world`; the import package is
+`shrdlu_blocks`. It has no third-party runtime dependencies.
 
 ## Install
 
-From this directory:
-
 ```bash
+cd ~/shrdlu-block-world
 python3 -m pip install -e .
 ```
 
-The installable distribution is named `shrdlu-block-world`. The Python import
-package is still named `shrdlu_blocks`:
+## Run
 
 ```bash
-python3 -m pip install "shrdlu-block-world @ file:///path/to/shrdlu-block-world"
+# Browser viewer at http://127.0.0.1:8000/
+shrdlu-block-world
+
+# API only
+shrdlu-block-world --headless
 ```
 
-The simulator package has no third-party, OpenAI, or agent dependency.
+Useful options:
 
-## In-Process API
+- `--host HOST`
+- `--port PORT`
+- `--open-browser`
+
+You can also run the module directly:
+
+```bash
+python3 -m shrdlu_blocks.simulator
+```
+
+## Python API
 
 ```python
 from shrdlu_blocks import ShrdluBlocksEnv
@@ -32,33 +46,24 @@ env.execute_action({"name": "lower_grasper", "args": {}})
 print(env.snapshot_text())
 ```
 
-## Headless HTTP Service
-
-```bash
-python3 -m shrdlu_blocks.simulator --headless
-```
-
-This starts the simulator API without a viewer.
-
-## Browser Viewer
-
-```bash
-python3 -m shrdlu_blocks.simulator
-```
-
-The viewer serves on `0.0.0.0:8000` by default. It shows the simulated state,
-event log, manual grasper controls, explicit `x/y` move inputs, and object
-selection/highlighting. It does not include an agent or command text box.
-
-## Limited HTTP API
-
-Both standalone modes expose:
+## HTTP API
 
 - `GET /api/state`
 - `POST /api/action`
 - `POST /api/reset`
 
-Allowed actions:
+`POST /api/action` expects an action object:
+
+```json
+{
+  "action": {
+    "name": "move_grasper",
+    "args": {"x": -0.1, "y": 0.4}
+  }
+}
+```
+
+Supported action names:
 
 - `move_grasper` with `x` and `y`
 - `lower_grasper`
@@ -68,28 +73,22 @@ Allowed actions:
 - `highlight_object`
 - `unhighlight_object`
 
-## Port Forwarding
+## Configuration
+
+```bash
+export SHRDLU_SIMULATOR_HOST=0.0.0.0
+export SHRDLU_SIMULATOR_PORT=8000
+export SHRDLU_WEB_OPEN_BROWSER=1
+```
+
+For remote use, forward the viewer port and open `http://localhost:8000`:
 
 ```bash
 ssh -L 8000:localhost:8000 user@remote-host
 ```
 
-Then open:
+## Layout
 
-```text
-http://localhost:8000
-```
-
-## Environment
-
-```bash
-export SHRDLU_SIMULATOR_HOST=0.0.0.0
-export SHRDLU_SIMULATOR_PORT=8000
-export SHRDLU_WEB_OPEN_BROWSER=0
-```
-
-## Project Structure
-
-- `shrdlu_blocks/simulator/`: environment, controller internals, scene model, and HTTP API server
-- `shrdlu_blocks/viewer/`: browser viewer assets and static UI server extension
-- `shrdlu_blocks/client.py`: small HTTP client for a running simulator service
+- `shrdlu_blocks/simulator/`: environment, controller, scene model, and HTTP server
+- `shrdlu_blocks/viewer/`: browser viewer and static assets
+- `shrdlu_blocks/client.py`: small HTTP client for a running service
