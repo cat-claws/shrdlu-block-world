@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SHRDLU Blocks</title>
+  <link rel="stylesheet" href="/web_viewer.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="scene-pane" aria-label="Scene">
+      <header class="topbar">
+        <div>
+          <h1 id="appTitle">SHRDLU Blocks</h1>
+          <p id="statusText">Connecting...</p>
+        </div>
+        <div class="topbar-actions">
+          <button type="button" id="selectModeBtn" class="mode-button active">Select</button>
+          <button type="button" id="moveModeBtn" class="mode-button">Move</button>
+          <button type="button" id="zoomOutBtn" class="icon-button" title="Zoom out">-</button>
+          <button type="button" id="zoomInBtn" class="icon-button" title="Zoom in">+</button>
+          <button type="button" id="resetBtn">Reset</button>
+        </div>
+      </header>
+      <div class="canvas-wrap">
+        <canvas id="sceneCanvas"></canvas>
+      </div>
+    </section>
+
+    <aside class="control-pane" aria-label="Controls">
+      <section class="tool-section">
+        <h2>Move Grasper</h2>
+        <div class="coord-grid">
+          <label>
+            <span>X</span>
+            <input id="moveXInput" type="number" step="0.01" value="0.00">
+          </label>
+          <label>
+            <span>Y</span>
+            <input id="moveYInput" type="number" step="0.01" value="0.00">
+          </label>
+          <button type="button" id="moveSubmitBtn">Move</button>
+        </div>
+      </section>
+
+      <section class="tool-section">
+        <h2>Grasper</h2>
+        <div class="button-grid">
+          <button type="button" data-action="raise_grasper">Raise</button>
+          <button type="button" data-action="lower_grasper">Lower</button>
+          <button type="button" data-action="open_grasper">Open</button>
+          <button type="button" data-action="close_grasper">Close</button>
+        </div>
+      </section>
+
+      <section class="tool-section">
+        <h2>Selected Object</h2>
+        <div id="selectedObject" class="selected-object">None</div>
+        <div class="button-grid">
+          <button type="button" id="highlightBtn">Highlight</button>
+          <button type="button" id="unhighlightBtn">Unhighlight</button>
+        </div>
+      </section>
+
+      <section class="tool-section object-section">
+        <h2>Objects</h2>
+        <div id="objectList" class="object-list"></div>
+      </section>
+
+      <section class="tool-section output-section">
+        <h2>Events</h2>
+        <pre id="outputLog">Connecting...</pre>
+      </section>
+    </aside>
+  </main>
+  <script src="/web_viewer.js"></script>
+</body>
+</html>
