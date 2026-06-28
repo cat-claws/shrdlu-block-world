@@ -3,8 +3,8 @@ requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "shrdlu-block-world"
-version = "0.1.0"
+name = "shrdlu-world"
+version = "0.1.1"
 description = "Small standalone tabletop blocks-world simulator."
 readme = "README.md"
 requires-python = ">=3.9"
@@ -18,7 +18,7 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/cat-claws/shrdlu-block-world"
+Homepage = "https://github.com/cat-claws/shrdlu-world"
 
 [tool.setuptools.packages.find]
 include = ["shrdlu_blocks*"]

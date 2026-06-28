@@ -1,4 +1,4 @@
-# SHRDLU Block World
+# SHRDLU World
 
 Small standalone tabletop blocks-world simulator. It can run as a Python object,
 a headless HTTP service, or a browser viewer for manual control.
@@ -6,7 +6,7 @@ a headless HTTP service, or a browser viewer for manual control.
 ## Install
 
 ```bash
-pip install shrdlu-block-world
+pip install shrdlu-world
 ```
 
 For local development:
